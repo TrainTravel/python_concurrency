@@ -1,6 +1,7 @@
 #server.py
 
 from socket import *
+from threading import Thread
 
 def fib_server(address):
     sock = socket(AF_INET, SOCK_STREAM)
@@ -10,7 +11,9 @@ def fib_server(address):
     while True:
         client, addr = sock.accept()
         print("Connection", addr)
-        fib_handler(client)
+        x = Thread(target=fib_handler, args=(client,))
+        x.start()
+    
  
 def fib(n):
     if n <= 2:
